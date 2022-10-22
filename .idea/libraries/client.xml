@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="client">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/DreamBot/BotData/client.jar!/" />
+      <root url="jar://$USER_HOME$/DreamBot/BotData/gamepack.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
