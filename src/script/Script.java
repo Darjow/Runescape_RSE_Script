@@ -7,6 +7,7 @@ import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import util.PaintHelper;
+import static util.Constants.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import java.util.Arrays;
 public class Script extends AbstractScript {
 
     public static long startTime;
-    public static String status;
 
     private ArrayList<Node> nodes;
 
@@ -35,7 +35,6 @@ public class Script extends AbstractScript {
     @Override
     public void onStart() {
         startTime = System.currentTimeMillis();
-        status = "initializing";
 
         nodes.addAll(Arrays.asList(
                 new Banking(),
