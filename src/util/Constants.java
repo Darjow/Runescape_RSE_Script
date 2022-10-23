@@ -8,6 +8,9 @@ public class Constants {
     public static int EGG_ID = 223;
     public static int EGGS_COLLECTED = 0;
 
+    //GEAR
+    public static int MONK_ROBE_TOP = 544;
+    public static int MONK_ROBE_BOTTOM = 542;
 
     //LOCATIONS
     public static Area FEROX_ENCLAVE = new Area();

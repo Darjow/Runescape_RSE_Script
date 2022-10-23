@@ -1,11 +1,13 @@
 package nodes;
 
+import util.Constants;
+
 public abstract class Node {
 
     public abstract boolean validate();
     public abstract void execute();
 
-    public String setNodeStatus(String s){
-        return String.format("[Node: %s] - %s -", this.getClass().getSimpleName(), s);
+    public void setNodeStatus(String s){
+        Constants.STATUS =  String.format("[Node: %s] - %s -", this.getClass().getSimpleName(), s);
     }
 }
