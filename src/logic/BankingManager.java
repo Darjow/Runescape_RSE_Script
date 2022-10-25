@@ -18,7 +18,7 @@ import static util.Constants.*;
 
 public class BankingManager {
 
-    private boolean failSafesExecuted = false;
+    private static boolean failSafesExecuted = false;
 
     public static boolean needMonkRobeT = false;
     public static boolean needMonkRobeB = false;
@@ -63,7 +63,7 @@ public class BankingManager {
         return true;
     }
 
-    public boolean equip(Filter<Item> item) {
+    private static boolean equip(Filter<Item> item) {
         Logger.info("Equipping: "+ item);
         if (Inventory.get(item).isValid()) {
             Logger.debug("Actions on item to equip: ");
@@ -83,7 +83,7 @@ public class BankingManager {
     public static boolean hasFailsafesExecuted(){
         return failSafesExecuted;
     }
-    public boolean withdraw(Filter<Item> item){
+    private static boolean withdraw(Filter<Item> item){
         Logger.info("Withdrawing item");
         if(Bank.contains(item)){
             if(Bank.withdraw(item, 1)) {
