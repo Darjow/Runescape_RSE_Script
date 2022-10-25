@@ -21,16 +21,14 @@ import static util.Constants.*;
 
 public class Banking extends Node {
 
-    private BankingManager bm;
 
-    public Banking(BankingManager bm) {
-        this.bm = bm;
+    public Banking() {
+
     }
 
     @Override
     public boolean validate() {
-        //is not at red spider eggs and inventory is not empty
-        return (!Inventory.isEmpty() /*&& is not at red spiders*/) || bm.needRestock();
+        return (!Inventory.isEmpty() && !RED_SPIDERS.contains(Players.getLocal())) || BankingManager.needRestock();
     }
 
     @Override
@@ -39,12 +37,12 @@ public class Banking extends Node {
             //Bank is closed
             if(!FEROX_ENCLAVE.contains(Players.getLocal())){
                 setNodeStatus("Teleporting to ferox enclave");
-                Traversing.teleportRingOfDueling();
+                Traversing.teleportRingOfDueling(this);
             }
             else{
                 setNodeStatus("Running to bank");
                 Logger.info("Running to bank.");
-                Traversing.goToBank();
+                Traversing.goToBank(this);
             }
             setNodeStatus("Opening bank.");
             if (Bank.open()) {
@@ -52,26 +50,28 @@ public class Banking extends Node {
             }
         } else {
             //Bank is opened
-            if (!bm.hasFailsafesExecuted()) {
-                bm.executeFailsafes();
-            } else if (bm.needRestock()) {
+            if (!BankingManager.hasFailsafesExecuted()) {
+                BankingManager.executeFailsafes();
+            } else if (BankingManager.needRestock()) {
                 if (Inventory.isFull()) {
                     setNodeStatus("Depositing inventory.");
                     depositInventory();
-                } else if (bm.needRingOfDueling()) {
-                    if (bm.restockEquipable(e -> e.getName().contains("dueling("))) {
+                } else if (BankingManager.needRingOfDueling()) {
+                    if (BankingManager.restockEquipable(e -> e.getName().contains("dueling("))) {
                         Logger.info("Succesfully equipped ring of dueling");
                     }
-                } else if (bm.needMonkRobes()) {
-                    if (bm.needMonkRobeT) {
-                        if (bm.restockEquipable(e -> e.getID() == MONK_ROBE_TOP)) {
-                            bm.needMonkRobeT = false;
+                } else if (BankingManager.needMonkRobes()) {
+                    if (BankingManager.needMonkRobeT) {
+                        if (BankingManager.restockEquipable(e -> e.getID() == MONK_ROBE_TOP)) {
+                            BankingManager.needMonkRobeT = false;
                         }
-                    } else if (bm.needMonkRobeB) {
-                        if (bm.restockEquipable(e -> e.getID() == MONK_ROBE_BOTTOM)) {
-                            bm.needMonkRobeB = false;
+                    } else if (BankingManager.needMonkRobeB) {
+                        if (BankingManager.restockEquipable(e -> e.getID() == MONK_ROBE_BOTTOM)) {
+                            BankingManager.needMonkRobeB = false;
                         }
                     }
+                }else if (!Inventory.isEmpty()){
+                    depositInventory();
                 }
             }
         }

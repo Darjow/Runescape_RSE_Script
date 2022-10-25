@@ -23,13 +23,13 @@ public class BankingManager {
     public static boolean needMonkRobeT = false;
     public static boolean needMonkRobeB = false;
 
-    public boolean needRestock(){
+    public static boolean needRestock(){
         return needRingOfDueling() || needMonkRobes();
     }
-    public void init(){
+    public static void init(){
         needRestock();
     }
-    public boolean needMonkRobes() {
+    public static boolean needMonkRobes() {
         if(Equipment.getItemInSlot(EquipmentSlot.CHEST) != null){
             if(Equipment.getItemInSlot(EquipmentSlot.CHEST).getID() == MONK_ROBE_TOP){
                 needMonkRobeT = false;
@@ -52,7 +52,7 @@ public class BankingManager {
         return needMonkRobeB || needMonkRobeT;
     }
 
-    public boolean needRingOfDueling() {
+    public static boolean needRingOfDueling() {
         if (Equipment.getItemInSlot(EquipmentSlot.RING) != null) {
             if (!Equipment.getItemInSlot(EquipmentSlot.RING).getName().contains("Ring of dueling")) {
                 Logger.debug("Ring of dueling not equipped");
@@ -80,7 +80,7 @@ public class BankingManager {
         return false;
     }
 
-    public boolean hasFailsafesExecuted(){
+    public static boolean hasFailsafesExecuted(){
         return failSafesExecuted;
     }
     public boolean withdraw(Filter<Item> item){
@@ -98,7 +98,7 @@ public class BankingManager {
         return false;
     }
 
-    public boolean restockEquipable(Filter<Item> item) {
+    public static boolean restockEquipable(Filter<Item> item) {
         if (!Inventory.contains(item)) {
             withdraw(item);
         }
@@ -110,7 +110,7 @@ public class BankingManager {
         return false;
     }
 
-    public void executeFailsafes() {
+    public static void executeFailsafes() {
         STATUS = "[BANKINGMANAGER] - Executing failsafes";
 
         //set default withdraw to 1

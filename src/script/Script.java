@@ -1,6 +1,7 @@
 package script;
 
 import logic.BankingManager;
+import logic.Traversing;
 import nodes.Banking;
 import nodes.Node;
 import nodes.Picking;
@@ -50,7 +51,7 @@ public class Script extends AbstractScript {
         bm.init();
 
         nodes.addAll(Arrays.asList(
-                new Banking(bm),
+                new Banking(),
                 new Regenerate(),
                 new Picking()
         ));

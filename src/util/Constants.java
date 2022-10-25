@@ -14,6 +14,7 @@ public class Constants {
 
     //LOCATIONS
     public static Area FEROX_ENCLAVE = new Area();
+    public static Area RED_SPIDERS = new Area();
 
     //UTIL
     public static String STATUS = "Initialising";
