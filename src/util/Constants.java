@@ -17,4 +17,5 @@ public class Constants {
 
     //UTIL
     public static String STATUS = "Initialising";
+    public static int DIED = 0;
 }

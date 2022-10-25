@@ -16,9 +16,11 @@ public class PaintHelper {
         g.drawString("Time Running: " + formatTime(), 40, 90);
         g.drawString(String.format("Profit: %d", EGGS_COLLECTED * LivePrices.get(EGG_ID)), 40, 110);
         g.drawString(String.format("Profit per hour: %s", parseProfitPerhour()), 40, 130);
-        g.drawString(status, 40, 170);
+        g.drawString(String.format("Status: %s",STATUS), 40, 150);
 
-        g.drawString("DEBUG", 500, 90);
+        g.drawString("DEBUG", 600, 400);
+        g.drawString(String.format("Times died: %d", DIED), 600, 420);
+        g.drawString(String.format("Eggs collected: %d", EGGS_COLLECTED), 600, 440);
     }
 
     private static String formatTime() {
@@ -30,14 +32,13 @@ public class PaintHelper {
     }
 
     private static String parseProfitPerhour() {
-        DecimalFormat df = new DecimalFormat("0.00");
-
+        DecimalFormat df = new DecimalFormat("0");
         double pph = EGGS_COLLECTED * LivePrices.get(EGG_ID) / ((System.currentTimeMillis() - startTime) / 3600000.0);
 
         if (pph > 100000) {
             return Math.round(pph / 1000) + "k";
         }
-        return df.format(pph) + "";
+        return df.format(pph);
     }
 
 
