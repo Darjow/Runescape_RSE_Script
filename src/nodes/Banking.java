@@ -5,17 +5,9 @@ import logic.Traversing;
 import org.dreambot.api.methods.container.impl.Inventory;
 import org.dreambot.api.methods.container.impl.bank.Bank;
 import org.dreambot.api.methods.container.impl.bank.BankLocation;
-import org.dreambot.api.methods.container.impl.bank.BankQuantitySelection;
-import org.dreambot.api.methods.container.impl.equipment.Equipment;
-import org.dreambot.api.methods.container.impl.equipment.EquipmentSlot;
-import org.dreambot.api.methods.filter.Filter;
 import org.dreambot.api.methods.interactive.Players;
-import org.dreambot.api.script.ScriptManager;
 import org.dreambot.api.utilities.Logger;
-import org.dreambot.api.utilities.Sleep;
-import org.dreambot.api.wrappers.items.Item;
 
-import java.util.Arrays;
 
 import static util.Constants.*;
 
@@ -24,7 +16,18 @@ public class Banking extends Node {
 
     @Override
     public boolean validate() {
-        return (!Inventory.isEmpty() && !RED_SPIDERS.contains(Players.getLocal())) || BankingManager.needRestock();
+        if (!Inventory.isEmpty()) {
+            if (!RED_SPIDERS.contains(Players.getLocal())) {
+                if (!LUMBRIDGE.contains(Players.getLocal())) {
+                    return true;
+                }
+            }
+        }
+        if(BankingManager.needRestock()){
+            return BankLocation.getNearest().walkingDistance(Players.getLocal().getTile()) <= 10;
+        }
+
+        return false;
     }
 
     @Override
@@ -34,13 +37,13 @@ public class Banking extends Node {
             if(!FEROX_ENCLAVE.contains(Players.getLocal())) {
                 if (!BankingManager.needRestock()) {
                     setNodeStatus("Teleporting to ferox enclave");
-                    Traversing.teleportRingOfDueling(this);
+                    Traversing.teleportRingOfDueling();
                 }
             }
             else{
                 setNodeStatus("Running to bank");
                 Logger.info("Running to bank.");
-                Traversing.goToBank(this);
+                Traversing.goToBank();
             }
             setNodeStatus("Opening bank.");
             if (Bank.open()) {
@@ -50,7 +53,9 @@ public class Banking extends Node {
             //Bank is opened
             if (!BankingManager.hasFailsafesExecuted()) {
                 BankingManager.executeFailsafes();
-            } else if (BankingManager.needRestock()) {
+            }else if(!BankingManager.needRestock()){
+                depositInventory();
+            }else {
                 if (Inventory.isFull()) {
                     setNodeStatus("Depositing inventory.");
                     depositInventory();
@@ -75,6 +80,8 @@ public class Banking extends Node {
         }
     }
 
+
+
     private void depositInventory() {
         Logger.info("Depositing inventory");
         int spider_eggs = Inventory.count(EGG_ID);
@@ -83,5 +90,6 @@ public class Banking extends Node {
             EGGS_COLLECTED += spider_eggs;
         }
     }
+
 }
 

@@ -16,7 +16,7 @@ public class PaintHelper {
         g.drawString("Time Running: " + formatTime(), 40, 90);
         g.drawString(String.format("Profit: %d", EGGS_COLLECTED * LivePrices.get(EGG_ID)), 40, 110);
         g.drawString(String.format("Profit per hour: %s", parseProfitPerhour()), 40, 130);
-        g.drawString(String.format("Status: %s",STATUS), 40, 150);
+        g.drawString(String.format(STATUS), 40, 150);
 
         g.drawString("DEBUG", 600, 400);
         g.drawString(String.format("Times died: %d", DIED), 600, 420);

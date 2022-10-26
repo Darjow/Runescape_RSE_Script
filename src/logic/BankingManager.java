@@ -69,7 +69,7 @@ public class BankingManager {
             Logger.debug("Actions on item to equip: ");
             Arrays.stream(Inventory.get(item).getActions()).forEach(e -> Logger.debug(e));
             if (Inventory.get(item).interact("Wear")) {
-                Sleep.sleepUntil(() -> !Inventory.contains(item), 100,15);
+                Sleep.sleepUntil(() -> !Inventory.contains(item), 120,15);
                 if(Inventory.contains(item)){
                     Logger.info("Succesfully equipped item");
                     return true;

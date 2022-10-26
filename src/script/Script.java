@@ -5,6 +5,7 @@ import logic.Traversing;
 import nodes.*;
 import org.dreambot.api.methods.Calculations;
 
+import org.dreambot.api.methods.container.impl.bank.BankLocation;
 import org.dreambot.api.methods.interactive.Players;
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.Category;
@@ -45,15 +46,17 @@ public class Script extends AbstractScript {
     @Override
     public void onStart() {
         startTime = System.currentTimeMillis();
+        BankingManager.init();
 
         nodes.addAll(Arrays.asList(
                 new Banking(),
                 new Regenerate(),
+                new GoToSpiders(),
                 new Picking(),
-                new TeleportAway()
+                new TeleportAway(),
+                new DeathHandler()
         ));
 
-        BankingManager.init();
 
     }
 

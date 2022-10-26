@@ -1,7 +1,7 @@
 package nodes;
 
 import logic.BankingManager;
-import org.dreambot.api.methods.container.impl.bank.Bank;
+import org.dreambot.api.methods.container.impl.Inventory;
 import org.dreambot.api.methods.interactive.GameObjects;
 import org.dreambot.api.methods.interactive.Players;
 import org.dreambot.api.methods.prayer.Prayer;
@@ -18,7 +18,8 @@ public class Regenerate extends Node{
     public boolean validate() {
         return FEROX_ENCLAVE.contains(Players.getLocal()) &&
                 needRegenerate() &&
-                !BankingManager.needRestock();
+                !BankingManager.needRestock() &&
+                Inventory.isEmpty();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class Regenerate extends Node{
     private void regenerate() {
         if(GameObjects.closest("Pool of Refreshment").exists()){
             if(GameObjects.closest("Pool of Refreshment").interact()){
-                Logger.log("Succesfully clicked pool of refreshment");
+                Sleep.sleepUntil(() -> !needRegenerate() || !Players.getLocal().isMoving(), 500,8);
             }
         }
 

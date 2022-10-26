@@ -37,6 +37,9 @@ public class Constants {
 
     });
 
+    public static Area LUMBRIDGE = new Area(3200, 3237, 3254, 3189);
+
+
 
     //UTIL
     public static String STATUS = "Initialising";
