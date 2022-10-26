@@ -2,12 +2,10 @@ package script;
 
 import logic.BankingManager;
 import logic.Traversing;
-import nodes.Banking;
-import nodes.Node;
-import nodes.Picking;
-import nodes.Regenerate;
+import nodes.*;
 import org.dreambot.api.methods.Calculations;
 
+import org.dreambot.api.methods.interactive.Players;
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
@@ -47,19 +45,17 @@ public class Script extends AbstractScript {
     @Override
     public void onStart() {
         startTime = System.currentTimeMillis();
-        BankingManager bm = new BankingManager();
-        bm.init();
 
         nodes.addAll(Arrays.asList(
                 new Banking(),
                 new Regenerate(),
-                new Picking()
+                new Picking(),
+                new TeleportAway()
         ));
 
-        failSafes();
-    }
-
-    private void failSafes() {
+        BankingManager.init();
 
     }
+
+
 }

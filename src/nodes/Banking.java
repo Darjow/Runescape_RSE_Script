@@ -22,10 +22,6 @@ import static util.Constants.*;
 public class Banking extends Node {
 
 
-    public Banking() {
-
-    }
-
     @Override
     public boolean validate() {
         return (!Inventory.isEmpty() && !RED_SPIDERS.contains(Players.getLocal())) || BankingManager.needRestock();
@@ -35,9 +31,11 @@ public class Banking extends Node {
     public void execute() {
         if (!Bank.isOpen()) {
             //Bank is closed
-            if(!FEROX_ENCLAVE.contains(Players.getLocal())){
-                setNodeStatus("Teleporting to ferox enclave");
-                Traversing.teleportRingOfDueling(this);
+            if(!FEROX_ENCLAVE.contains(Players.getLocal())) {
+                if (!BankingManager.needRestock()) {
+                    setNodeStatus("Teleporting to ferox enclave");
+                    Traversing.teleportRingOfDueling(this);
+                }
             }
             else{
                 setNodeStatus("Running to bank");
