@@ -9,12 +9,14 @@ import static util.Constants.*;
 
 public class PaintHelper {
 
+    private static DecimalFormat df = new DecimalFormat("0");;
+
 
     public static void buildPaint(Graphics g){
         g.setFont(new Font("Sathu", Font.BOLD, 12));
 
         g.drawString("Time Running: " + formatTime(), 40, 90);
-        g.drawString(String.format("Profit: %d", EGGS_COLLECTED * LivePrices.get(EGG_ID)), 40, 110);
+        g.drawString(String.format("Profit: %d", (EGGS_COLLECTED * LivePrices.get(EGG_ID)) > 100000? df.format(EGGS_COLLECTED * LivePrices.get(EGG_ID)) : EGGS_COLLECTED * LivePrices.get(EGG_ID)), 40, 110);
         g.drawString(String.format("Profit per hour: %s", parseProfitPerhour()), 40, 130);
         g.drawString(String.format(STATUS), 40, 150);
 
@@ -32,9 +34,7 @@ public class PaintHelper {
     }
 
     private static String parseProfitPerhour() {
-        DecimalFormat df = new DecimalFormat("0");
         double pph = EGGS_COLLECTED * LivePrices.get(EGG_ID) / ((System.currentTimeMillis() - startTime) / 3600000.0);
-
         if (pph > 100000) {
             return Math.round(pph / 1000) + "k";
         }
