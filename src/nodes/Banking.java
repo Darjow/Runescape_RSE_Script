@@ -6,7 +6,10 @@ import org.dreambot.api.methods.container.impl.Inventory;
 import org.dreambot.api.methods.container.impl.bank.Bank;
 import org.dreambot.api.methods.container.impl.bank.BankLocation;
 import org.dreambot.api.methods.interactive.Players;
+import org.dreambot.api.methods.prayer.Prayer;
+import org.dreambot.api.methods.prayer.Prayers;
 import org.dreambot.api.utilities.Logger;
+import org.dreambot.api.utilities.Sleep;
 
 
 import static util.Constants.*;
@@ -24,7 +27,7 @@ public class Banking extends Node {
             }
         }
         if(BankingManager.needRestock()){
-            return BankLocation.getNearest().walkingDistance(Players.getLocal().getTile()) <= 10;
+            return BankLocation.getNearest().walkingDistance(Players.getLocal().getTile()) <= 10 || FEROX_ENCLAVE.contains(Players.getLocal());
         }
 
         return false;
@@ -33,6 +36,11 @@ public class Banking extends Node {
     @Override
     public void execute() {
         if (!Bank.isOpen()) {
+            if(Prayers.isActive(Prayer.PROTECT_FROM_MELEE)){
+                Logger.log("Prayer still active, disabling it");
+                Prayers.toggle(false, Prayer.PROTECT_FROM_MELEE);
+                Sleep.sleepUntil(() -> !Prayers.isActive(Prayer.PROTECT_FROM_MELEE), 50,40);
+            }
             //Bank is closed
             if(!FEROX_ENCLAVE.contains(Players.getLocal())) {
                 if (!BankingManager.needRestock()) {
@@ -86,8 +94,10 @@ public class Banking extends Node {
         Logger.info("Depositing inventory");
         int spider_eggs = Inventory.count(EGG_ID);
         if (Bank.depositAllItems()) {
-            Logger.info("Successfully deposited inventory");
-            EGGS_COLLECTED += spider_eggs;
+            if(Inventory.isFull()) {
+                Logger.info("Successfully deposited inventory");
+                EGGS_COLLECTED += spider_eggs;
+            }
         }
     }
 

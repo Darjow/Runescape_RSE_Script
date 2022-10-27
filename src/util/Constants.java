@@ -27,7 +27,7 @@ public class Constants {
             new Tile(3122, 3639, 0)
     });
 
-    public static Area RED_SPIDERS = new Area(3113, 9962, 3132, 9946);
+    public static Area RED_SPIDERS = new Area(3113, 9962, 3132, 9948);
 
     public static Area EDGEVILLE = new Area(new Tile[]{
             new Tile(3074,3513),

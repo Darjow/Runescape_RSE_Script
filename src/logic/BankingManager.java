@@ -64,7 +64,7 @@ public class BankingManager {
     }
 
     private static boolean equip(Filter<Item> item) {
-        Logger.info("Equipping: "+ item);
+        Logger.info("Equipping");
         if (Inventory.get(item).isValid()) {
             Logger.debug("Actions on item to equip: ");
             Arrays.stream(Inventory.get(item).getActions()).forEach(e -> Logger.debug(e));
@@ -116,14 +116,14 @@ public class BankingManager {
         //set default withdraw to 1
         while (Bank.getDefaultQuantity() != BankQuantitySelection.ONE) {
             Bank.setDefaultQuantity(BankQuantitySelection.ONE);
-            Sleep.sleepUntil(() -> Bank.getDefaultQuantity() == BankQuantitySelection.ONE, 100, 20);
+            Sleep.sleepUntil(() -> Bank.getDefaultQuantity() == BankQuantitySelection.ONE, 800);
         }
         //deposit gear
         if (needRestock()) {
             if (!Equipment.all(e -> e.isValid()).isEmpty()) {
                 Logger.log("We need to remove all equipment");
                 Bank.depositAllEquipment();
-                Sleep.sleepUntil(() -> Equipment.all(e -> e.isValid()).isEmpty(), 100, 20);
+                Sleep.sleepUntil(() -> Equipment.all(e -> e.isValid()).isEmpty(), 750);
             }
         }
         failSafesExecuted = true;

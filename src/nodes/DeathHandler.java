@@ -43,11 +43,13 @@ public class DeathHandler extends Node{
     }
 
     private void equipGear() {
-        List<Item> equipables = Inventory.all().stream().filter(e -> e.hasAction("Wear")).collect(Collectors.toList());
-        equipables.forEach(e -> {
-            if(e.interact()){
-                Sleep.sleep(Calculations.random(50,300));
-            }
-        });
+        List<Item> equipables = Inventory.all().stream().filter(e -> e != null && e.hasAction("Wear")).collect(Collectors.toList());
+        if(equipables.size() != 0){
+            equipables.forEach(e -> {
+                if (e.interact()) {
+                    Sleep.sleep(Calculations.random(50, 300));
+                }
+            });
+        }
     }
 }

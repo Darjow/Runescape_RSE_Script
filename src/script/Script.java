@@ -10,7 +10,9 @@ import org.dreambot.api.methods.interactive.Players;
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
+import org.dreambot.api.script.listener.ChatListener;
 import org.dreambot.api.utilities.Logger;
+import org.dreambot.api.wrappers.widgets.message.Message;
 import util.PaintHelper;
 import static util.Constants.*;
 
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @ScriptManifest(author = "Shock#5170", name = "sRedSpiderEggs", version = 1.0, description = "Private script for MrWalkway, no reselling is allowed", category = Category.MONEYMAKING)
-public class Script extends AbstractScript {
+public class Script extends AbstractScript implements ChatListener {
 
     public static long startTime;
 
@@ -56,8 +58,14 @@ public class Script extends AbstractScript {
                 new TeleportAway(),
                 new DeathHandler()
         ));
+    }
 
-
+    @Override
+    public void onGameMessage(Message message){
+        if(message.getMessage().contains("you are dead")){
+            Logger.warn("We have died!");
+            DIED++;
+        }
     }
 
 

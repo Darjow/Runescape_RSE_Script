@@ -39,12 +39,12 @@ public class Traversing {
             Logger.error("We need to teleport to ferox enclave but no ring");
             ScriptManager.getScriptManager().stop();
         }
-
+        Logger.log("Teleporting away with ring of dueling");
         if (!Tab.EQUIPMENT.isOpen()) {
             Tabs.open(Tab.EQUIPMENT);
-            if (Sleep.sleepUntil(() -> Tabs.isOpen(Tab.EQUIPMENT), 30, 40)) {
+            if (Sleep.sleepUntil(() -> Tabs.isOpen(Tab.EQUIPMENT), 500)) {
                 Equipment.getItemInSlot(EquipmentSlot.RING).interact("Ferox Enclave");
-                Sleep.sleepUntil(() -> FEROX_ENCLAVE.contains(Players.getLocal()), 30, 100);
+                Sleep.sleepUntil(() -> FEROX_ENCLAVE.contains(Players.getLocal()), Calculations.random(3400,4800));
             }
         }
 
