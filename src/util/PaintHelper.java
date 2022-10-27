@@ -16,7 +16,7 @@ public class PaintHelper {
         g.setFont(new Font("Sathu", Font.BOLD, 12));
 
         g.drawString("Time Running: " + formatTime(), 40, 90);
-        g.drawString(String.format("Profit: %d", (EGGS_COLLECTED * LivePrices.get(EGG_ID)) > 100000? df.format(EGGS_COLLECTED * LivePrices.get(EGG_ID)) : EGGS_COLLECTED * LivePrices.get(EGG_ID)), 40, 110);
+        g.drawString(String.format("Profit: %d", (EGGS_COLLECTED * LivePrices.get(EGG_ID)) > 100000?  Integer.parseInt(df.format(EGGS_COLLECTED * LivePrices.get(EGG_ID))) : EGGS_COLLECTED * LivePrices.get(EGG_ID)), 40, 110);
         g.drawString(String.format("Profit per hour: %s", parseProfitPerhour()), 40, 130);
         g.drawString(String.format(STATUS), 40, 150);
 
