@@ -70,7 +70,11 @@ public class GoToSpiders extends Node{
                 GameObject trapdoor = GameObjects.closest(e -> e.getName().equals("Trapdoor"));
                 boolean check = trapdoor.hasAction("Open");
                 if (GameObjects.closest(e -> e.getName().equals("Trapdoor") && String.valueOf(e.getX()).startsWith("309")).interact(check ? "Open" : "Climb-down")) {
-                    Sleep.sleepUntil(() -> GameObjects.closest("Trapdoor") == null || GameObjects.closest("Trapdoor").hasAction("Open") != check, Calculations.random(2500, 4000));
+                    try{
+                        Sleep.sleepUntil(() -> GameObjects.closest("Trapdoor") == null || GameObjects.closest("Trapdoor").hasAction("Open") != check, Calculations.random(2500, 4000));
+                    }catch(Exception e){
+                        Logger.warn("Didn't find trapdoor");
+                    }
                 }
             }
         }else{
