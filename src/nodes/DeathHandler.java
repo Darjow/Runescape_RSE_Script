@@ -21,7 +21,7 @@ public class DeathHandler extends Node{
 
     @Override
     public boolean validate() {
-        return LUMBRIDGE.contains(new Tile(Players.getLocal().getX(), Players.getLocal().getY(),0)) && BankLocation.getNearest().walkingDistance(Players.getLocal().getTile()) > 10;
+        return LUMBRIDGE.contains(new Tile(Players.getLocal().getX(), Players.getLocal().getY(),0));
     }
 
     @Override

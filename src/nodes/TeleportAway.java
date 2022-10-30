@@ -1,9 +1,11 @@
 package nodes;
 
+import logic.BankingManager;
 import logic.Traversing;
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.combat.Combat;
 import org.dreambot.api.methods.container.impl.Inventory;
+import org.dreambot.api.methods.container.impl.bank.Bank;
 import org.dreambot.api.methods.interactive.Players;
 import org.dreambot.api.methods.skills.Skill;
 import org.dreambot.api.methods.skills.Skills;
@@ -24,7 +26,9 @@ public class TeleportAway extends Node{
         }else{
             if(!Combat.isInWild()){
                 if(Skills.getRealLevel(Skill.PRAYER) > Skills.getBoostedLevel(Skill.PRAYER)){
-                    return !FEROX_ENCLAVE.contains(Players.getLocal());
+                    if(!BankingManager.needRingOfDueling()) {
+                        return !FEROX_ENCLAVE.contains(Players.getLocal());
+                    }
                 }
             }
         }

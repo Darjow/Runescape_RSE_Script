@@ -13,15 +13,16 @@ public class PaintHelper {
 
     public static void buildPaint(Graphics g){
         g.setFont(new Font("Sathu", Font.BOLD, 12));
-
+        g.setColor(Color.orange);
         g.drawString("Time Running: " + formatTime(), 40, 90);
         g.drawString(String.format("Profit: %s", formatProfit(false)), 40, 110);
         g.drawString(String.format("Profit per hour: %s", formatProfit(true)), 40, 130);
         g.drawString(String.format(STATUS), 40, 150);
 
-        g.drawString("DEBUG", 600, 400);
-        g.drawString(String.format("Times died: %d", DIED), 600, 420);
-        g.drawString(String.format("Eggs collected: %d", EGGS_COLLECTED), 600, 440);
+        g.drawString("DEBUG", 540, 400);
+        g.drawString(String.format("Times died: %d", DIED), 540, 420);
+        g.drawString(String.format("Eggs collected: %d", EGGS_COLLECTED), 540, 440);
+        g.drawString(String.format("Times hopped: %d", WORLDHOPPED), 540,460);
     }
 
     private static String formatTime() {
