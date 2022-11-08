@@ -45,4 +45,6 @@ public class Constants {
     public static String STATUS = "Initialising";
     public static int DIED = 0;
     public static int WORLDHOPPED = 0;
+    public static int FAILEDHOPPED = 0;
+    public static boolean SHOULDWORLDHOP = false;
 }

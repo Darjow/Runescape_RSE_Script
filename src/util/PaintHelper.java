@@ -19,10 +19,16 @@ public class PaintHelper {
         g.drawString(String.format("Profit per hour: %s", formatProfit(true)), 40, 130);
         g.drawString(String.format(STATUS), 40, 150);
 
-        g.drawString("DEBUG", 540, 400);
-        g.drawString(String.format("Times died: %d", DIED), 540, 420);
-        g.drawString(String.format("Eggs collected: %d", EGGS_COLLECTED), 540, 440);
-        g.drawString(String.format("Times hopped: %d", WORLDHOPPED), 540,460);
+        g.setColor(Color.black);
+        g.fillRect(370,340,150,140);
+        g.setColor(Color.white);
+        g.drawRect(370,340,150,140);
+        g.drawString("DEBUG", 430, 360);
+        g.drawString(String.format("Times died: %d", DIED), 400, 390);
+        g.drawString(String.format("Eggs collected: %d", EGGS_COLLECTED), 400, 410);
+        g.drawString(String.format("Egg live price: %d", LivePrices.get(EGG_ID)), 400, 430);
+        g.drawString(String.format("Times hopped: %d", WORLDHOPPED), 400,450);
+        g.drawString(String.format("Failed hopping: %d", FAILEDHOPPED), 400, 470);
     }
 
     private static String formatTime() {

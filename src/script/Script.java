@@ -7,12 +7,14 @@ import org.dreambot.api.methods.Calculations;
 
 import org.dreambot.api.methods.container.impl.bank.BankLocation;
 import org.dreambot.api.methods.interactive.Players;
+import org.dreambot.api.methods.world.World;
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.script.listener.ChatListener;
 import org.dreambot.api.utilities.Logger;
 import org.dreambot.api.wrappers.widgets.message.Message;
+import org.dreambot.launcher.proxy.Proxy;
 import util.PaintHelper;
 import static util.Constants.*;
 
@@ -50,13 +52,16 @@ public class Script extends AbstractScript implements ChatListener {
         startTime = System.currentTimeMillis();
         BankingManager.init();
 
+
+
         nodes.addAll(Arrays.asList(
                 new Banking(),
                 new Regenerate(),
                 new GoToSpiders(),
                 new Picking(),
                 new TeleportAway(),
-                new DeathHandler()
+                new DeathHandler(),
+                new WorldHopping()
         ));
     }
 
@@ -65,6 +70,9 @@ public class Script extends AbstractScript implements ChatListener {
         if(message.getMessage().contains("you are dead")){
             Logger.warn("We have died!");
             DIED++;
+        }else if(message.getMessage().contains("cannot switch worlds")){
+            Logger.warn("Still in combat when trying to worldhop");
+            SHOULDWORLDHOP = true;
         }
     }
 

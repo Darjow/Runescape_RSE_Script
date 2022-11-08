@@ -26,7 +26,7 @@ public class Traversing {
             Walking.walk(BankLocation.getNearest());
         } else {
             Logger.error("Cannot reach bank from current destination");
-            ScriptManager.getScriptManager().stop();
+            //ScriptManager.getScriptManager().stop();
         }
     }
 
