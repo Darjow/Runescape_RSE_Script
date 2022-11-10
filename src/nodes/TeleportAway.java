@@ -22,7 +22,7 @@ public class TeleportAway extends Node{
             if(Inventory.isFull()) {
                 return true;
             }
-            return Skills.getBoostedLevel(Skill.PRAYER) == 0 && Skills.getBoostedLevel(Skill.HITPOINTS) < Calculations.random(6,9);
+            return Skills.getBoostedLevel(Skill.PRAYER) == 0 || Skills.getBoostedLevel(Skill.HITPOINTS) < Calculations.random(6,9);
         }else{
             if(!Combat.isInWild()){
                 if(Skills.getRealLevel(Skill.PRAYER) > Skills.getBoostedLevel(Skill.PRAYER)){
@@ -38,7 +38,7 @@ public class TeleportAway extends Node{
 
     @Override
     public void execute() {
+        setNodeStatus("Teleporting away");
         Traversing.teleportRingOfDueling();
-
     }
 }

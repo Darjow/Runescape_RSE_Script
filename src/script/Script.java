@@ -53,7 +53,6 @@ public class Script extends AbstractScript implements ChatListener {
         BankingManager.init();
 
 
-
         nodes.addAll(Arrays.asList(
                 new Banking(),
                 new Regenerate(),

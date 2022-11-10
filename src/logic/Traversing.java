@@ -3,6 +3,7 @@ package logic;
 import nodes.Node;
 import nodes.Picking;
 import org.dreambot.api.methods.Calculations;
+import org.dreambot.api.methods.container.impl.bank.Bank;
 import org.dreambot.api.methods.container.impl.bank.BankLocation;
 import org.dreambot.api.methods.container.impl.equipment.Equipment;
 import org.dreambot.api.methods.container.impl.equipment.EquipmentSlot;
@@ -12,10 +13,10 @@ import org.dreambot.api.methods.map.Tile;
 import org.dreambot.api.methods.tabs.Tab;
 import org.dreambot.api.methods.tabs.Tabs;
 import org.dreambot.api.methods.walking.impl.Walking;
-import org.dreambot.api.methods.widget.Widgets;
 import org.dreambot.api.script.ScriptManager;
 import org.dreambot.api.utilities.Logger;
 import org.dreambot.api.utilities.Sleep;
+import script.Script;
 
 import static util.Constants.*;
 public class Traversing {
@@ -25,8 +26,17 @@ public class Traversing {
         if (BankLocation.getNearest().canReach()) {
             Walking.walk(BankLocation.getNearest());
         } else {
-            Logger.error("Cannot reach bank from current destination");
-            //ScriptManager.getScriptManager().stop();
+            if(FEROX_ENCLAVE.contains(Players.getLocal())){
+                Logger.warn("Failsafe running to ferox bank");
+                Walking.walk(BankLocation.FEROX_ENCLAVE.getTile());
+            }else if(LUMBRIDGE.contains(Players.getLocal())){
+                Logger.warn("Failsafe running to lumbridge bank");
+                Walking.walk(BankLocation.LUMBRIDGE.getTile());
+            }
+            else{
+                Logger.error("Cannot reach bank from current destination");
+                ScriptManager.getScriptManager().stop();
+            }
         }
     }
 
@@ -39,14 +49,13 @@ public class Traversing {
             Logger.error("We need to teleport to ferox enclave but no ring");
             ScriptManager.getScriptManager().stop();
         }
-        Logger.log("Teleporting away with ring of dueling");
         if (!Tab.EQUIPMENT.isOpen()) {
             Tabs.open(Tab.EQUIPMENT);
-            if (Sleep.sleepUntil(() -> Tabs.isOpen(Tab.EQUIPMENT), 500)) {
-                Equipment.getItemInSlot(EquipmentSlot.RING).interact("Ferox Enclave");
-                Sleep.sleepUntil(() -> FEROX_ENCLAVE.contains(Players.getLocal()), Calculations.random(3400,4800));
+            Sleep.sleepUntil(() -> Tabs.isOpen(Tab.EQUIPMENT), 500);
+        }else{
+            Equipment.getItemInSlot(EquipmentSlot.RING).interact("Ferox Enclave");
+            Sleep.sleepUntil(() -> FEROX_ENCLAVE.contains(Players.getLocal()), Calculations.random(3400,4800));
             }
         }
 
     }
-}

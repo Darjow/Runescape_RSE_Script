@@ -4,6 +4,7 @@ import logic.BankingManager;
 import org.dreambot.api.methods.Calculations;
 import org.dreambot.api.methods.combat.Combat;
 import org.dreambot.api.methods.container.impl.Inventory;
+import org.dreambot.api.methods.container.impl.bank.Bank;
 import org.dreambot.api.methods.interactive.GameObjects;
 import org.dreambot.api.methods.interactive.Players;
 import org.dreambot.api.methods.map.Tile;
@@ -28,24 +29,27 @@ public class Regenerate extends Node{
 
     @Override
     public void execute() {
-        if(Prayers.isActive(Prayer.PROTECT_FROM_MELEE)){
-            Logger.log("Prayer still active, disabling it");
-            Prayers.toggle(false, Prayer.PROTECT_FROM_MELEE);
-            Sleep.sleepUntil(() -> !Prayers.isActive(Prayer.PROTECT_FROM_MELEE), 50,40);
-        }
-        else{
-            if(!Walking.isRunEnabled()){
-                if(Walking.toggleRun()){
-                    Sleep.sleepUntil(() -> Walking.isRunEnabled(), Calculations.random(100,300)*2);
+        if(Bank.isOpen()){
+            Bank.close();
+        }else{
+            if(Prayers.isActive(Prayer.PROTECT_FROM_MELEE)){
+                Logger.log("Prayer still active, disabling it");
+                Prayers.toggle(false, Prayer.PROTECT_FROM_MELEE);
+                Sleep.sleepUntil(() -> !Prayers.isActive(Prayer.PROTECT_FROM_MELEE), 50,40);
+            }
+            else {
+                if (!Walking.isRunEnabled()) {
+                    if (Walking.toggleRun()) {
+                        Sleep.sleepUntil(() -> Walking.isRunEnabled(), Calculations.random(100, 300) * 2);
+                    }
+                }
+                if (needRegenerate()) {
+                    Logger.log("We need to regenerate");
+                    setNodeStatus("Regenerating health and prayer");
+                    regenerate();
                 }
             }
-            if(needRegenerate()){
-                Logger.log("We need to regenerate");
-                setNodeStatus("Regenerating health and prayer");
-                regenerate();
-            }
         }
-
     }
 
     private void regenerate() {

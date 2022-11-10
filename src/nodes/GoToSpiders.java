@@ -62,8 +62,12 @@ public class GoToSpiders extends Node{
         } else if(EDGEVILLE.contains(Players.getLocal())) {
             if (GameObjects.closest(e -> e.getName().equals("Trapdoor") && String.valueOf(e.getX()).startsWith("309") && e.distance(Players.getLocal().getTile()) < 10) == null) {
                 setNodeStatus("Running to trapdoor");
-                Walking.clickTileOnMinimap(new Tile(3095 - Calculations.random(0, 3), 3468 + Calculations.random(0, 3)));
-                Sleep.sleepUntil(() -> GameObjects.closest(e -> e.getName().equals("Trapdoor") && e.walkingDistance(Players.getLocal().getTile()) < 8) != null || !Players.getLocal().isMoving(), Calculations.random(6000, 8000));
+                if(Walking.clickTileOnMinimap(new Tile(3095 - Calculations.random(0, 3), 3468 + Calculations.random(0, 3)))){
+                    Sleep.sleepUntil(() -> GameObjects.closest(e -> e.getName().equals("Trapdoor") && e.walkingDistance(Players.getLocal().getTile()) < 8) != null || !Players.getLocal().isMoving(), Calculations.random(6000, 8000));
+                }else{
+                    Walking.walk(new Tile(3095 - Calculations.random(0, 3), 3468 + Calculations.random(0, 3)));
+                }
+
 
             }else if(GameObjects.closest(e -> e.getName().equals("Trapdoor") && String.valueOf(e.getX()).startsWith("309") && e.distance(Players.getLocal().getTile()) < 10) != null) {
                 setNodeStatus("Handling to trapdoor");
@@ -88,7 +92,8 @@ public class GoToSpiders extends Node{
                 }
             }
             if (Widgets.getWidget(475) != null) {
-                Widgets.getWidget(475).getChild(11).interact();
+                Logger.log("Widget wilderness");
+                Widgets.getWidget(475).getChild(11).interact("Enter Wilderness");
             }
             Sleep.sleep(500, 800);
 
